@@ -1,0 +1,4 @@
+#!/bin/sh
+
+gcc -pedantic -Os -o out/coderunner src/main.c
+
