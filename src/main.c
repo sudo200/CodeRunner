@@ -3,14 +3,22 @@
 #include <string.h>
 #include <time.h>
 
+#define	EQUALS(x, y)	(strcmp(x, y) == 0)
+
+#define VERSION "v1.0.1"
+
 int main(int argc, char** argv) {
-  if(argc < 2) { // Show help page
+  if(argc < 2 || (argc >= 2 && (EQUALS(argv[1], "-h") || EQUALS(argv[1], "--help")))) { // Show help page
     puts(
 	  "Usage: coderunner <command> <command-args>\n"
 	  "\n"
-	  "Copyleft sudo200 2022\n"
+	  "Coderunner " VERSION "\n"
 	  "Contribute at https://github.com/sudo200/CodeRunner.git"
 	);
+    return -1;
+  }
+  if(argc >= 2 && (EQUALS(argv[1], "-v") || EQUALS(argv[1], "--version"))) { // Show version
+    puts("Coderunner " VERSION);
     return -1;
   }
 
