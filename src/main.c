@@ -1,26 +1,38 @@
+#include <getopt.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#define	EQUALS(x, y)	(strcmp(x, y) == 0)
+#define VERSION "v1.0.2"
 
-#define VERSION "v1.0.1"
+static bool help_f = false;
+static bool version_f = false;
+
+static struct option options[] = {
+/* NAME		ARGS		FLAG			SHORT  */
+  {"help",	no_argument,	(int *)&help_f,		'h'},
+  {"version",	no_argument,	(int *)&version_f,	'v'},
+
+  {NULL,	no_argument,	NULL,			0}
+};
+
+void usage(void);
+void version(void);
 
 int main(int argc, char** argv) {
-  if(argc < 2 || (argc >= 2 && (EQUALS(argv[1], "-h") || EQUALS(argv[1], "--help")))) { // Show help page
-    puts(
-	  "Usage: coderunner <command> <command-args>\n"
-	  "\n"
-	  "Coderunner " VERSION "\n"
-	  "Contribute at https://github.com/sudo200/CodeRunner.git"
-	);
-    return -1;
-  }
-  if(argc >= 2 && (EQUALS(argv[1], "-v") || EQUALS(argv[1], "--version"))) { // Show version
-    puts("Coderunner " VERSION);
-    return -1;
-  }
+  int option_index = 0;
+  while(getopt_long_only(argc, argv, "", options, &option_index) != -1);
+
+  if(help_f) // Show help page
+    usage();
+    
+  if(version_f) // Show version
+    version();
+
+  if(optind == argc) // No futher args -> Show help page
+    usage();
 
   size_t buffer_size = 0;
   
@@ -45,5 +57,22 @@ int main(int argc, char** argv) {
   
   free(buffer_str);
   return 0;
+}
+
+void usage(void)
+{
+  puts(
+          "Usage: coderunner <command> <command-args>\n"
+          "\n"
+          "Coderunner " VERSION "\n"
+          "Contribute at https://github.com/sudo200/CodeRunner.git"
+        );
+  exit(-1);
+}
+
+void version(void)
+{
+  puts("Coderunner " VERSION);
+  exit(-1);
 }
 
