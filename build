@@ -1,4 +1,4 @@
 #!/bin/sh
 
-gcc -pedantic -Os -o out/coderunner src/main.c
+gcc -I./include -pedantic -Os -o out/coderunner src/*
 
