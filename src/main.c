@@ -5,17 +5,19 @@
 #include <string.h>
 #include <time.h>
 
-#define VERSION "v1.1.0"
+#define VERSION "v1.1.1"
 
+static bool autoexit_f = false;
 static bool help_f = false;
 static bool version_f = false;
 
 static const option_t options[] = {
-/* long		short	arg	flag			arg  */
-  {"help",	'h',	no_arg,	(int *)&help_f,		NULL },
-  {"version",	'v',	no_arg,	(int *)&version_f,	NULL },
+/* long		short	arg	flag			argbuffer  */
+  { "autoexit",	'a',	no_arg,	(int *)&autoexit_f,	NULL },
+  { "help",	'h',	no_arg,	(int *)&help_f,		NULL },
+  { "version",	'v',	no_arg,	(int *)&version_f,	NULL },
 
-  {NULL,	'\0',	no_arg,	NULL,			NULL }
+  { NULL,	'\0',	no_arg,	NULL,			NULL }
 };
 
 void usage(void);
@@ -55,6 +57,9 @@ int main(int argc, char** argv) {
   const time_t after = time(NULL);
 
   printf("\nProcess exited with code %d (0x%X); took %lu seconds\n", exit_code, exit_code, after - before);
+
+  if(!autoexit_f)
+    getchar();
   
   free(buffer_str);
   return 0;
@@ -65,6 +70,11 @@ void usage(void)
   puts(
           "Usage: coderunner <command> <command-args>\n"
           "\n"
+	  "Options:\n"
+	  "-a, --autoexit\tDon't pause after <command> exits\n"
+	  "-h, --help\tShow this help page\n"
+	  "-v, --version\tprint out version"
+	  "\n"
           "Coderunner " VERSION "\n"
           "Contribute at https://github.com/sudo200/CodeRunner.git"
         );
