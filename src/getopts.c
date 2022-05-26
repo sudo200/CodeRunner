@@ -4,7 +4,7 @@ int startsWith(const char *pre, const char *str)
 {
     size_t lenpre = strlen(pre),
            lenstr = strlen(str);
-    return lenstr < lenpre ? 1 : memcmp(pre, str, lenpre * sizeof(char)) == 0;
+    return lenstr < lenpre ? 0 : memcmp(pre, str, lenpre * sizeof(char)) == 0;
 }
 
 const option_t * searchoptlong(const option_t * optarr, const char * str)
