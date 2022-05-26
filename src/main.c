@@ -68,14 +68,17 @@ int main(int argc, char** argv) {
 void usage(void)
 {
   puts(
-          "Usage: coderunner <command> <command-args>\n"
+          "Usage: coderunner [options] <command> <command-args>\n"
           "\n"
 	  "Options:\n"
-	  "-a, --autoexit\tDon't pause after <command> exits\n"
-	  "-h, --help\tShow this help page\n"
-	  "-v, --version\tprint out version"
+	  "-a, --autoexit\t\tDon't pause after <command> exits\n"
 	  "\n"
-          "Coderunner " VERSION "\n"
+	  "-h, --help\t\tShow this help page\n"
+	  "\n"
+	  "-v, --version\t\tprint out version\n"
+	  "\n"
+	  "Written by sudo200 and contributors\n"
+	  "\n"
           "Contribute at https://github.com/sudo200/CodeRunner.git"
         );
   exit(-1);
